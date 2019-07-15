@@ -6,13 +6,12 @@
 /*   By: mmkhwana <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 16:55:21 by mmkhwana          #+#    #+#             */
-/*   Updated: 2019/07/13 17:45:55 by mmkhwana         ###   ########.fr       */
+/*   Updated: 2019/07/15 15:58:43 by mmkhwana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <sys/uio.h>
-#include <unistd.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "./libft/libft.h"
@@ -33,7 +32,6 @@ static int			ft_read(int fd, char **stack)
 		{
 			temp = ft_strjoin(*stack, buff);
 			*stack = temp;
-			free(temp);
 		}
 		if (*stack && ft_strchr(*stack, '\n'))
 			break ;
