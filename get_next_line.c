@@ -6,7 +6,7 @@
 /*   By: mmkhwana <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 16:55:21 by mmkhwana          #+#    #+#             */
-/*   Updated: 2019/07/15 15:58:43 by mmkhwana         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:41:45 by mmkhwana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ static int			ft_read(int fd, char **stack)
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
-		if (!*stack)
+		if (!(*stack))
 			*stack = ft_strdup(buff);
 		else
 		{
-			temp = ft_strjoin(*stack, buff);
-			*stack = temp;
+			temp = *stack;
+			*stack = ft_strjoin(temp, buff);
+			//*stack = temp;
+			ft_strdel(&temp);
 		}
 		if (*stack && ft_strchr(*stack, '\n'))
 			break ;
@@ -48,7 +50,7 @@ int					get_next_line(const int fd, char **line)
 	i = 0;
 	ret = 2;
 	if (stack == NULL)
-		stack = "";
+		stack = ft_strnew(0);
 	if (!(stack) || !line || fd < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	if (ft_strchr(stack, '\n') == NULL)
