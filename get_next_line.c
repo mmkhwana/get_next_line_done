@@ -6,15 +6,10 @@
 /*   By: mmkhwana <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 16:55:21 by mmkhwana          #+#    #+#             */
-/*   Updated: 2019/07/15 17:41:45 by mmkhwana         ###   ########.fr       */
+/*   Updated: 2019/07/16 09:48:32 by mmkhwana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "./libft/libft.h"
 #include "get_next_line.h"
 
 static int			ft_read(int fd, char **stack)
@@ -26,15 +21,9 @@ static int			ft_read(int fd, char **stack)
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
-		if (!(*stack))
-			*stack = ft_strdup(buff);
-		else
-		{
-			temp = *stack;
-			*stack = ft_strjoin(temp, buff);
-			//*stack = temp;
-			ft_strdel(&temp);
-		}
+		temp = *stack;
+		*stack = ft_strjoin(*stack, buff);
+		free(temp);
 		if (*stack && ft_strchr(*stack, '\n'))
 			break ;
 	}
@@ -44,13 +33,12 @@ static int			ft_read(int fd, char **stack)
 int					get_next_line(const int fd, char **line)
 {
 	static char	*stack = NULL;
+	char		*temp;
 	int			ret;
 	int			i;
 
 	i = 0;
-	ret = 2;
-	if (stack == NULL)
-		stack = ft_strnew(0);
+	stack == NULL ? stack = ft_strnew(0) : stack;
 	if (!(stack) || !line || fd < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	if (ft_strchr(stack, '\n') == NULL)
@@ -64,7 +52,9 @@ int					get_next_line(const int fd, char **line)
 		while (stack[i] != '\n' && stack[i])
 			i++;
 		*line = ft_strsub(stack, 0, i);
+		temp = stack;
 		stack = ft_strdup(stack + i + 1);
+		free(temp);
 	}
 	return (1);
 }
