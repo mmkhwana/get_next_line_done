@@ -6,10 +6,11 @@
 /*   By: mmkhwana <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 16:55:21 by mmkhwana          #+#    #+#             */
-/*   Updated: 2019/07/16 09:48:32 by mmkhwana         ###   ########.fr       */
+/*   Updated: 2019/07/17 13:22:25 by mmkhwana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "get_next_line.h"
 
 static int			ft_read(int fd, char **stack)
@@ -34,10 +35,11 @@ int					get_next_line(const int fd, char **line)
 {
 	static char	*stack = NULL;
 	char		*temp;
-	int			ret;
 	int			i;
+	int			ret;
 
 	i = 0;
+	ret = 2;
 	stack == NULL ? stack = ft_strnew(0) : stack;
 	if (!(stack) || !line || fd < 0 || BUFF_SIZE <= 0)
 		return (-1);
