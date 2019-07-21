@@ -6,7 +6,7 @@
 /*   By: mmkhwana <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 16:55:21 by mmkhwana          #+#    #+#             */
-/*   Updated: 2019/07/20 14:53:29 by mmkhwana         ###   ########.fr       */
+/*   Updated: 2019/07/21 14:06:36 by mmkhwana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,16 @@ static char			*ft_line(char *stack, char **line)
 		i++;
 	*line = ft_strsub(stack, 0, i);
 	temp = stack;
-	stack = ft_strdup(stack + i + 1);
-	free(temp);
+	if (stack[i])
+	{
+		stack = ft_strdup(stack + i + 1);
+		free(temp);
+	}
+	else
+	{
+		free(stack);
+		stack = NULL;
+	}
 	return (stack);
 }
 
